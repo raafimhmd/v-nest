@@ -7,7 +7,7 @@ import { IContent } from './interfaces/content.interface';
 @Injectable()
 export class ContentPageService {
     constructor(
-        @InjectModel('content') private readonly ContentModel: Model<IContent>,
+        @InjectModel('Content') private readonly ContentModel: Model<IContent>,
     ) { }
 
     // Fetch All Contents

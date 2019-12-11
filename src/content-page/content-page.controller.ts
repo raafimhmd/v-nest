@@ -2,14 +2,14 @@ import { Controller, Post, Body, Res, HttpStatus, Get, Param, NotFoundException,
 import { ContentPageService } from './content-page.service';
 import { ContentDto } from './dto/create-content.dto';
 
-@Controller('content-page')
+@Controller('content')
 export class ContentPageController {
     constructor(
         private contentService: ContentPageService,
     ) { }
 
     // Add Content
-    @Post('/content')
+    @Post()
     async addContent(
         @Res() res,
         @Body() contentDto: ContentDto,
@@ -21,8 +21,19 @@ export class ContentPageController {
         });
     }
 
+    // Fetch Fetch All Contents
+    @Get()
+    async getContents(
+        @Res() res,
+        @Param('contentId') contentId,
+    ) {
+        const content = await this.contentService.getAllContents();
+        if (!content) { throw new NotFoundException('Content doesnt exist'); }
+        return res.status(HttpStatus.OK).json(content);
+    }
+
     // Fetch a particular content using ID
-    @Get('/content/:contentId')
+    @Get('/:contentId')
     async getContent(
         @Res() res,
         @Param('contentId') contentId,
@@ -33,7 +44,7 @@ export class ContentPageController {
     }
 
     // Update Content
-    @Put('content/update')
+    @Put('/update')
     async updateContent(
         @Res() res,
         @Query('contentId') contentId,
@@ -48,7 +59,7 @@ export class ContentPageController {
     }
 
     // Delete Content
-    @Delete('content/delete')
+    @Delete('/delete')
     async deleteContent(
         @Res() res,
         @Query('contentId') contentId,

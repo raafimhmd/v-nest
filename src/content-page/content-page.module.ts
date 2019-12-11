@@ -7,7 +7,7 @@ import { ContentSchemas } from './schemas/content.schemas';
 @Module({
     imports: [
         MongooseModule.forFeature([{
-            name: 'content',
+            name: 'Content',
             schema: ContentSchemas,
         }]),
     ],
